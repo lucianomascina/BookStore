@@ -62,25 +62,25 @@ namespace BookStore
       
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(PostBook postbook)
+        public async Task<IActionResult> Create(PostBook postBook)
         {
             if (ModelState.IsValid)
             {
                 var book = new Book
                 {
-                    Author = await _authorRepository.GetById(postbook.AuthorId),
-                    Publisher = await _publisherRepository.GetById(postbook.PublisherId),
-                    Genre = await _genreRepository.GetById(postbook.GenreId),
-                    Title = postbook.Title,
-                    Isbn = postbook.Isbn,
-                    Stock = postbook.Stock,
-                    Price = postbook.Price,
-                    PublicationDate = postbook.PublicationDate
+                    Author = await _authorRepository.GetById(postBook.AuthorId),
+                    Publisher = await _publisherRepository.GetById(postBook.PublisherId),
+                    Genre = await _genreRepository.GetById(postBook.GenreId),
+                    Title = postBook.Title,
+                    Isbn = postBook.Isbn,
+                    Stock = postBook.Stock,
+                    Price = postBook.Price,
+                    PublicationDate = postBook.PublicationDate
                 };
                 await _bookRepository.Add(book);
                 return RedirectToAction(nameof(Index));
             }
-            return View(postbook);
+            return View(postBook);
         }
 
        
@@ -96,23 +96,42 @@ namespace BookStore
             ViewData["Authors"] = new SelectList(await _authorRepository.GetAllOrderedByName(), "Id", "LastName");
             ViewData["Publishers"] = new SelectList(await _publisherRepository.GetAllOrderedByName(), "Id", "Name");
             ViewData["Genres"] = new SelectList(await _genreRepository.GetAllOrderedByName(), "Id", "Name");
-            return View(book);
+            var postBook = new PostBook
+            {
+                Id = book.Id,
+                AuthorId = book.Author.Id,
+                GenreId = book.Genre.Id,
+                Isbn = book.Isbn,
+                Price = book.Price,
+                PublicationDate = book.PublicationDate,
+                PublisherId = book.Publisher.Id,
+                Stock = book.Stock,
+                Title = book.Title 
+            };
+
+            return View(postBook);
         }
 
     
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Isbn,Stock,Price,PublicationDate,Image")] Book book)
+        public async Task<IActionResult> Edit(int id,PostBook postBook)
         {
-            if (id != book.Id)
-            {
-                return NotFound();
-            }
+            var book = await _bookRepository.GetById(id);
 
             if (ModelState.IsValid)
             {
                 try
                 {
+                    book.Author = await _authorRepository.GetById(postBook.AuthorId);
+                    book.Publisher = await _publisherRepository.GetById(postBook.PublisherId);
+                    book.Genre = await _genreRepository.GetById(postBook.GenreId);
+                    book.Title = postBook.Title;
+                    book.Isbn = postBook.Isbn;
+                    book.Stock = postBook.Stock;
+                    book.Price = postBook.Price;
+                    book.PublicationDate = postBook.PublicationDate;
+
                     await _bookRepository.Update(book);
                 }
                 catch (DbUpdateConcurrencyException)

@@ -20,6 +20,8 @@ namespace BookStore.Context
             base.OnModelCreating(modelBuilder);
             modelBuilder.HasDefaultSchema(Schema);
 
+            modelBuilder.Entity<Book>().Property(p => p.Price).HasPrecision(18,2);
+
         }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Book> Books { get; set; }

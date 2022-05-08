@@ -1,4 +1,4 @@
-﻿@model BookStore.Models.Book
+﻿@model BookStore.ViewModels.PostBook
 
 @{
     ViewData["Title"] = "Edit";
@@ -19,17 +19,19 @@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Author" class="control-label"></label>
-                <select asp-for="Author" class="form-control" asp-items="ViewBag.Authors"></select>
-                <span asp-validation-for="Author" class="text-danger"></span>
+                <label asp-for="AuthorId" class="control-label"></label>
+                <select asp-for="AuthorId" class="form-control" asp-items="ViewBag.Authors"></select>
+                <span asp-validation-for="AuthorId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Publisher" class="control-label"></label>
-                <select asp-for="Publisher" class="form-control" asp-items="ViewBag.Publishers"></select>
+                <label asp-for="PublisherId" class="control-label"></label>
+                <select asp-for="PublisherId" class="form-control" asp-items="ViewBag.Publishers"></select>
+                <span asp-validation-for="PublisherId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Genre" class="control-label"></label>
-                <select asp-for="Genre" class="form-control" asp-items="ViewBag.Genres"></select>
+                <label asp-for="GenreId" class="control-label"></label>
+                <select asp-for="GenreId" class="form-control" asp-items="ViewBag.Genres"></select>
+                <span asp-validation-for="GenreId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Isbn" class="control-label"></label>

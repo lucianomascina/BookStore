@@ -8,6 +8,8 @@ namespace BookStore.ViewModels
 {
     public class PostBook
     {
+        public int Id { get; set; }
+
         [Required(ErrorMessage = "Debe ingresar el autor.")]
         [Display(Name = "Autor")]
         public int AuthorId { get; set; }
@@ -34,7 +36,8 @@ namespace BookStore.ViewModels
 
         [Required(ErrorMessage = "Debe ingresar el precio.")]
         [Display(Name = "Precio")]
-        public double Price { get; set; }
+     
+        public decimal Price { get; set; }
 
         [Display(Name = "Fecha de publicación")]
         [DataType(DataType.Date)]
