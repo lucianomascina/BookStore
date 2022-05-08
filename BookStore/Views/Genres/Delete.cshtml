@@ -1,0 +1,26 @@
+﻿@model BookStore.Models.Genre
+
+@{
+    ViewData["Title"] = "Borrar";
+}
+
+<h3>Borrar</h3>
+
+<div>
+    <h4>Género</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+        <a class="btn btn-success" asp-action="Index">Volver</a>
+    </form>
+</div>
